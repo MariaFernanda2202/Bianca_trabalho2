@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import os
 
 # atividade 1
 # Equivalente ao: matriz_1 <- matrix(1:10)
@@ -96,3 +97,78 @@ for linha in matriz:
 #atividade 7
 #ALTERAR ELEMENTO DA MATRIZ: nomematriz[linha,coluna]<-valor que será alterado no elemento linha,coluna
 #equivale a matriz_6[1,2]<-100 
+def printar_matriz():
+    os.system('cls')
+    for idx,coluna in enumerate(matriz[0]):
+        numeracao.append(idx)
+    print(f"    {numeracao}\n")
+    for idx,linha in enumerate(matriz):
+        print(f"{idx} | {linha}")
+
+
+while True:
+    if os.path.exists("matriz.txt"):
+        matriz = []
+
+        with open("matriz.txt", "r") as arquivo:
+            for linha in arquivo:
+                valores = list(map(int,linha.strip().split()))
+                matriz.append(valores)
+        numeracao = []
+
+        printar_matriz()
+        print("Voce deseja mudar um elemento da matriz, ou criar outra matriz?")
+        print("| 1 -> Mudar elemento\n| 2 -> Criar matriz")
+        op = int(input("> "))
+        if op == 1:
+            numeracao = []
+            printar_matriz()
+            linha = int(input("Informe a linha em que o elemento que você deseja trocar está: "))
+            coluna = int(input("Informe a coluna em que o elemento que você deseja trocar está: "))
+            novo_valor = int(input("Informe o novo valor: "))
+
+            matriz[linha][coluna] = novo_valor
+            numeracao = []
+            printar_matriz()
+
+            with open("matriz.txt", "w") as arquivo:
+                for linha in matriz:
+                    arquivo.write(" ".join(map(str, linha)) + "\n")
+
+            print("Deseja trocar mais algum valor ? 'S' para sim e 'N' para não")
+            op = input("> ").lower()
+            if op == "n":
+                print("Sistema Encerrado")
+                break
+            elif op == "s":
+                continue
+            else:
+                print("Comando inválido\n Encerrando o sistema")
+                break
+        elif op == 2:
+            os.remove("matriz.txt")
+            os.system('cls')
+            print("Matriz excluída com sucesso! \n")
+
+    else:
+        os.system('cls')
+        print("Matriz não encontrada")
+        print("Criando nova matriz: ")
+        qntd_linha = int(input("Informe a quantidade de linhas da matriz: "))
+        qntd_colunas = int(input("Informe a quantidade de colunas da matriz: "))
+
+        matriz = []
+
+        for linhas in range(qntd_linha):
+            linha = []
+            for colunas in range(qntd_colunas):
+                valor = int(input(f"Elemento da linha {linhas} e da coluna {colunas}: "))
+                linha.append(valor)
+            matriz.append(linha)
+
+        numeracao = []
+        printar_matriz()
+
+        with open("matriz.txt", "w") as arquivo:
+            for linha in matriz:
+                arquivo.write(" ".join(map(str, linha)) + "\n")
