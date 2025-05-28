@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 # atividade 1
 # Equivalente ao: matriz_1 <- matrix(1:10)
@@ -61,9 +62,28 @@ else:
 #CRIANDO MATRIZES A PARTIR DE VETORES COM rbind() e cbind()
 #rbind(): empilha vetores um embaixo do outro (linhas)
 #cbind(): cola vetores lado a lado (colunas)
+vetor5 = pd.Series([1, 3, 5, 7])
+vetor6 = pd.Series([9, 11, 13, 15])
 
+# Transformar cada vetor em DataFrame de 1 linha
+df1 = pd.DataFrame([vetor5.values])
+df2 = pd.DataFrame([vetor6.values])
 
+# Concatenar verticalmente (rbind)
+df_rbind = pd.concat([df1, df2], ignore_index=True)
 
+# Opcional: renomear colunas
+df_rbind.columns = ['Col1', 'Col2', 'Col3', 'Col4']
+
+print(df_rbind)
+
+vetor5 = pd.Series([1, 3, 5, 7])
+vetor6 = pd.Series([9, 11, 13, 15])
+
+df = pd.concat([vetor5, vetor6], axis=1)
+df.columns = ['vetor5', 'vetor6']
+
+print(df)
 
 #atividade 6
 #TRANSFORMANDO UM VETOR EM MATRIZ usando as.matrix
